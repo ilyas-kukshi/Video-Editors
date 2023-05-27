@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppThemeShared {
-  static Color primaryColor = const Color(0xff439A97);
+  static Color primaryColor = const Color(0xff20A090);
   static Color secondaryColor = const Color(0xff62B6B7);
   static Color tertiartyColor = const Color(0xff97DECE);
 
