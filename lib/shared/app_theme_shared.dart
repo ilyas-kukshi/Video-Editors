@@ -72,6 +72,9 @@ class AppThemeShared {
       AutovalidateMode? autovalidateMode,
 
       //
+      TextStyle hintStyle = const TextStyle(fontSize: 18, color: Colors.white),
+
+      //
       String? Function(String?)? validator,
       void Function(String)? onChanged,
       void Function(String?)? onSaved,
@@ -94,8 +97,10 @@ class AppThemeShared {
       double enabledBorderWidth = 2,
 
       //
-      Color enabledBorderColor = Colors.cyan,
-      Color focusedBorderColor = const Color(0xff439A97),
+      Color borderColor = Colors.white,
+      Color enabledBorderColor = Colors.white,
+      Color focusedBorderColor = Colors.white,
+      Color disabledBorderColor = Colors.white,
 
       //
       Widget? suffixIcon,
@@ -131,9 +136,10 @@ class AppThemeShared {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           contentPadding: const EdgeInsets.all(20),
           hintText: hintText,
-          hintStyle: TextStyle(fontSize: 18, color: Colors.black.withOpacity(0.7)),
+          hintStyle: hintStyle,
           labelText: labelText,
-          labelStyle: TextStyle(fontSize: 16, color: AppThemeShared.primaryColor),
+          labelStyle:
+              TextStyle(fontSize: 16, color: AppThemeShared.primaryColor),
           suffixIcon: suffixIcon,
           isDense: true,
           prefixIcon: prefixIcon,
@@ -141,21 +147,19 @@ class AppThemeShared {
               const BoxConstraints(minWidth: 0, minHeight: 0),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(
-                  color: AppThemeShared.secondaryColor,
-                  width: enabledBorderWidth)),
+              borderSide:
+                  BorderSide(color: borderColor, width: enabledBorderWidth)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(
-                  color: AppThemeShared.secondaryColor,
-                  width: enabledBorderWidth)),
+              borderSide:
+                  BorderSide(color: borderColor, width: enabledBorderWidth)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide(
                   color: focusedBorderColor, width: enabledBorderWidth)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: const BorderSide(color: Colors.black)),
+              borderSide: BorderSide(color: disabledBorderColor)),
         ),
       ),
     );
@@ -214,7 +218,8 @@ class AppThemeShared {
       child: DropdownButtonFormField(
           decoration: InputDecoration(
             labelText: labelText,
-            labelStyle: TextStyle(fontSize: 16, color: AppThemeShared.primaryColor),
+            labelStyle:
+                TextStyle(fontSize: 16, color: AppThemeShared.primaryColor),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 borderSide: BorderSide(
