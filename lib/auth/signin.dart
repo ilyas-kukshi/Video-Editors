@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:video_editors/models/signin/signin_model.dart';
+import 'package:video_editors/services/auth_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
 import 'package:video_editors/shared/slide_in_widget.dart';
 import 'package:video_editors/shared/utility.dart';
@@ -14,6 +16,8 @@ class _SigninState extends State<Signin> {
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +68,29 @@ class _SigninState extends State<Signin> {
                 duration: const Duration(milliseconds: 1400),
                 direction: SlideDirection.left,
                 child: AppThemeShared.textFormField(
-                    context: context,
-                    hintText: 'Enter password',
-                    controller: passwordController,
-                    validator: Utility.passwordLengthValidator),
+                  context: context,
+                  hintText: 'Enter password',
+                  obscureText: obscureText,
+                  maxLines: 1,
+                  controller: passwordController,
+                  validator: Utility.passwordLengthValidator,
+                  suffixIcon: GestureDetector(
+                    onTap: () => setState(() {
+                      obscureText = !obscureText;
+                    }),
+                    child: obscureText
+                        ? const Icon(
+                            Icons.visibility,
+                            color: Colors.white,
+                            size: 25,
+                          )
+                        : const Icon(
+                            Icons.visibility_off,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                  ),
+                ),
               ),
               const SizedBox(height: 50),
               SlideInWidget(
@@ -82,8 +105,11 @@ class _SigninState extends State<Signin> {
                   onTap: () {
                     final valid = formKey.currentState!.validate();
 
-                    if(valid){
-                      
+                    if (valid) {
+                      AuthServices().loginService(SigninModel(
+                          id: '',
+                          email: emailController.text,
+                          password: passwordController.text));
                     }
                   },
                 ),
@@ -93,5 +119,9 @@ class _SigninState extends State<Signin> {
         ),
       ),
     );
+  }
+
+  signinService(SigninModel model) {
+    final data = AuthServices().singinService(model);
   }
 }

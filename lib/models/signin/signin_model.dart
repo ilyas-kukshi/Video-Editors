@@ -16,8 +16,9 @@ String signinModelToJson(SigninModel data) => json.encode(data.toJson());
 @freezed
 class SigninModel with _$SigninModel {
   const factory SigninModel({
-    String? email,
-    String? password,
+    String? id,
+    required String email,
+    required String password,
   }) = _SigninModel;
 
   factory SigninModel.fromJson(Map<String, dynamic> json) =>

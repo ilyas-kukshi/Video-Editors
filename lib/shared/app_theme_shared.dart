@@ -72,6 +72,7 @@ class AppThemeShared {
       AutovalidateMode? autovalidateMode,
 
       //
+      TextStyle style = const TextStyle(fontSize: 18, color: Colors.white),
       TextStyle hintStyle = const TextStyle(fontSize: 18, color: Colors.white),
 
       //
@@ -131,7 +132,7 @@ class AppThemeShared {
         onFieldSubmitted: onFieldSubmitted,
         onTap: onTap,
         inputFormatters: inputFormatters,
-        style: const TextStyle(fontSize: 18),
+        style: style,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           contentPadding: const EdgeInsets.all(20),
