@@ -101,6 +101,31 @@ app.post("/login", (req, res, next) => {
         });
 });
 
+const Resume = require('../api/models/resume_model');
+
+// Create a new resume
+app.post('/resumes', (req, res) => {
+    const { userId, personalInfo, education, skills } = req.body;
+
+    const resume = new Resume({
+        userId,
+        personalInfo,
+        education,
+        skills
+    });
+
+    resume.save()
+        .then(savedResume => {
+            res.status(201).json(savedResume);
+        })
+        .catch(error => {
+            console.error('Error saving resume:', error);
+            res.status(500).json({ error: 'Failed to create resume' });
+        });
+});
+
+
+
 
 mongoose.connect("mongodb+srv://ilyaskukshi:ilyaskukshi@cluster0.bn4aw.mongodb.net/Video-Editors?retryWrites=true&w=majority")
     .then(() => {
