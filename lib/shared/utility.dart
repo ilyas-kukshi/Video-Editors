@@ -39,7 +39,7 @@ class Utility {
 
   static String? passwordLengthValidator(String? password) {
     if (password!.length < 6) {
-      return 'Pleas enter a valid phone number';
+      return 'password should be atleast 6 in length';
     }
     return null;
   }
@@ -81,8 +81,6 @@ class Utility {
     }
     return null;
   }
-
- 
 
   static String getInitials(String fullName) => fullName.isNotEmpty
       ? fullName.trim().split(' ').map((l) => l[0]).take(2).join().toUpperCase()
