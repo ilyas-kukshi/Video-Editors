@@ -24,13 +24,6 @@ const educationSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    startDate: {
-        type: Date,
-        required: true,
-    },
-    endDate: {
-        type: Date,
-    },
     degree: {
         type: String,
         required: true,
@@ -42,20 +35,27 @@ const skillSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    expertiseLevel: {
-        type: String,
-        required: true,
-    },
+    // expertiseLevel: {
+    //     type: String,
+    //     required: true,
+    // },
 });
 
 const resumeSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
     },
-    personalInfo: personalInfoSchema,
-    education: [educationSchema],
-    skills: [skillSchema],
+    personalInfo: {
+        type: personalInfoSchema,
+
+    },
+    education: {
+        type: [educationSchema],
+
+    },
+    skills: {
+        type: [skillSchema],
+    },
 });
 
 const Resume = mongoose.model('Resume', resumeSchema);
