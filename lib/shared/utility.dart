@@ -54,6 +54,20 @@ class Utility {
     return null;
   }
 
+  static String? emailValidator(String? value) {
+    final RegExp emailRegex = RegExp(
+      r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$',
+    );
+
+    if (value!.isEmpty) {
+      return 'Please enter an email address';
+    } else if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+
+    return null;
+  }
+
   static String? otpValidator(String? otp) {
     if (otp!.length != 6) {
       return 'Pleas enter a valid otp';

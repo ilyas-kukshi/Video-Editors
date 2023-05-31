@@ -72,9 +72,9 @@ class AppThemeShared {
       AutovalidateMode? autovalidateMode,
 
       //
-      TextStyle style = const TextStyle(fontSize: 18, color: Colors.white),
-      TextStyle hintStyle = const TextStyle(fontSize: 18, color: Colors.white),
-
+      TextStyle style = const TextStyle(fontSize: 18, color: Color(0xff20A090)),
+      TextStyle hintStyle =
+          const TextStyle(fontSize: 18, color: Color(0xff20A090)),
       //
       String? Function(String?)? validator,
       void Function(String)? onChanged,
@@ -98,10 +98,10 @@ class AppThemeShared {
       double enabledBorderWidth = 2,
 
       //
-      Color borderColor = Colors.white,
-      Color enabledBorderColor = Colors.white,
-      Color focusedBorderColor = Colors.white,
-      Color disabledBorderColor = Colors.white,
+      Color borderColor = const Color(0xff20A090),
+      Color enabledBorderColor = const Color(0xff20A090),
+      Color focusedBorderColor = const Color(0xff20A090),
+      Color disabledBorderColor = const Color(0xff20A090),
 
       //
       Widget? suffixIcon,

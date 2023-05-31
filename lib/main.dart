@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:video_editors/auth/signin.dart';
+import 'package:video_editors/build_resume.dart';
 import 'package:video_editors/splash_screen.dart';
 
 void main() {
@@ -42,10 +43,15 @@ class MyApp extends StatelessWidget {
     switch (settings.name) {
       case '/signin':
         return PageTransition(
-            child: const Signin(), type: PageTransitionType.leftToRight);
+            child: const Signin(),
+            type: PageTransitionType.leftToRight);
+      case '/buildResume':
+        return PageTransition(
+            child:  BuildResume(id: settings.arguments as String,), type: PageTransitionType.leftToRight);
       default:
         return PageTransition(
-            child: const Signin(), type: PageTransitionType.leftToRight);
+            child: const Signin(),
+            type: PageTransitionType.leftToRight);
     }
   }
 }
