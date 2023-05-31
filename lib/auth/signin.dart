@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:video_editors/models/reponse_model.dart';
 import 'package:video_editors/models/signin/signin_model.dart';
 import 'package:video_editors/services/auth_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
+import 'package:video_editors/shared/dialogs.dart';
 import 'package:video_editors/shared/slide_in_widget.dart';
 import 'package:video_editors/shared/utility.dart';
 
@@ -61,6 +65,13 @@ class _SigninState extends State<Signin> {
                       hintStyle:
                           TextStyle(color: Colors.white.withOpacity(0.7)),
                       controller: emailController,
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      borderColor: Colors.white,
+                      enabledBorderColor: Colors.white,
+                      focusedBorderColor: Colors.white,
+                      disabledBorderColor: Colors.white,
                     ),
                   )),
               const SizedBox(height: 20),
@@ -74,6 +85,14 @@ class _SigninState extends State<Signin> {
                   maxLines: 1,
                   controller: passwordController,
                   validator: Utility.passwordLengthValidator,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                  borderColor: Colors.white,
+                  enabledBorderColor: Colors.white,
+                  focusedBorderColor: Colors.white,
+                  disabledBorderColor: Colors.white,
                   suffixIcon: GestureDetector(
                     onTap: () => setState(() {
                       obscureText = !obscureText;
@@ -106,8 +125,8 @@ class _SigninState extends State<Signin> {
                     final valid = formKey.currentState!.validate();
 
                     if (valid) {
-                      AuthServices().loginService(SigninModel(
-                          id: '',
+                      DialogShared.loadingDialog(context, "Logging in");
+                      loginService(SigninModel(
                           email: emailController.text,
                           password: passwordController.text));
                     }
@@ -122,6 +141,26 @@ class _SigninState extends State<Signin> {
   }
 
   signinService(SigninModel model) {
-    final data = AuthServices().singinService(model);
+    final data = AuthServices().singinService(context, model);
+  }
+
+  loginService(SigninModel model) async {
+    ResponseModel? responseModel = await AuthServices().loginService(
+        context,
+        SigninModel(
+            id: '',
+            email: emailController.text,
+            password: passwordController.text));
+
+    if (responseModel != null) {
+      final json = jsonDecode(responseModel.data);
+      print(json);
+      Navigator.pop(context);
+
+      if (json["resumeCreated"] == true) {
+      } else {
+        Navigator.pushNamed(context, '/buildResume', arguments: json['userId']);
+      }
+    }
   }
 }
