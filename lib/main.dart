@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:video_editors/auth/signin.dart';
-import 'package:video_editors/build_resume.dart';
-import 'package:video_editors/dashboard_main.dart';
-import 'package:video_editors/splash_screen.dart';
+import 'package:video_editors/screens/add_wok.dart';
+import 'package:video_editors/screens/build_resume.dart';
+import 'package:video_editors/screens/dashboard_main.dart';
+import 'package:video_editors/screens/portfolio.dart';
+import 'package:video_editors/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,10 +55,23 @@ class MyApp extends StatelessWidget {
             type: PageTransitionType.leftToRight);
       case '/dashboardMain':
         return PageTransition(
-            child:  DashboardMain(
+            child: DashboardMain(
               id: settings.arguments as String,
+            ),
+            type: PageTransitionType.leftToRight);
+      case '/portfolio':
+        return PageTransition(
+            child: Portfolio(
+              id: settings.arguments as String,
+            ),
+            type: PageTransitionType.leftToRight);
+      case '/addWork':
+        return PageTransition(
+            child: AddWork(
+              id: settings.arguments as String,
+            ),
+            type: PageTransitionType.leftToRight);
 
-            ), type: PageTransitionType.leftToRight);
       default:
         return PageTransition(
             child: const Signin(), type: PageTransitionType.leftToRight);

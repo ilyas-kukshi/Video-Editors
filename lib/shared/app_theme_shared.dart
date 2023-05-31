@@ -201,13 +201,19 @@ class AppThemeShared {
     String? labelText,
     Color hintColor = const Color(0xff439A97),
     Color borderColor = const Color(0xff439A97),
+    Color iconEnabledColor = const Color(0xffFFFFFF),
+    Color iconDisabledColor = const Color(0xffFFFFFF),
+    Color dropdownColor = const Color(0xff20A090),
 
+    //
+    TextStyle style = const TextStyle(color: Colors.white, fontSize: 18),
     //
     double borderRadius = 0,
     double enabledBorderWidth = 2,
     //
     Color enabledBorderColor = Colors.cyan,
     Color focusedBorderColor = const Color(0xff439A97),
+    Color disabledBorderColor = const Color(0xffffffff),
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -218,32 +224,38 @@ class AppThemeShared {
       //     border: Border.all(color: AppThemeShared.secondaryColor, width: 2)),
       child: DropdownButtonFormField(
           decoration: InputDecoration(
+            // fillColor: AppThemeShared.primaryColor,
             labelText: labelText,
-            labelStyle:
-                TextStyle(fontSize: 16, color: AppThemeShared.primaryColor),
+            labelStyle: const TextStyle(fontSize: 16, color: Colors.white),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: BorderSide(
-                    color: AppThemeShared.secondaryColor,
-                    width: enabledBorderWidth)),
+                borderSide:
+                    BorderSide(color: borderColor, width: enabledBorderWidth)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 borderSide: BorderSide(
-                    color: AppThemeShared.secondaryColor,
-                    width: enabledBorderWidth)),
+                    color: enabledBorderColor, width: enabledBorderWidth)),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 borderSide: BorderSide(
                     color: focusedBorderColor, width: enabledBorderWidth)),
             disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: const BorderSide(color: Colors.black)),
+                borderSide: const BorderSide(color: Colors.white)),
           ),
+          iconEnabledColor: iconEnabledColor,
+          iconDisabledColor: iconDisabledColor,
           hint: hint,
           isExpanded: true,
           value: value,
+          dropdownColor: dropdownColor,
           items: items.map((String item) {
-            return DropdownMenuItem(value: item, child: Text(item.toString()));
+            return DropdownMenuItem(
+                value: item,
+                child: Text(
+                  item.toString(),
+                  style: style,
+                ));
           }).toList(),
           onChanged: onChanged),
     );

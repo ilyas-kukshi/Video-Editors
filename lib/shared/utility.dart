@@ -96,6 +96,44 @@ class Utility {
     return null;
   }
 
+  String? youTubeLinkValidator(String? value) {
+    if (value != null && value.isNotEmpty) {
+      // Regular expression pattern to match YouTube video URLs
+      RegExp regExp = RegExp(
+        r'^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$',
+        // caseSensitive: false,
+        // multiLine: false,
+      );
+
+      bool isValidLink = regExp.hasMatch(value);
+      if (!isValidLink) {
+        return 'Invalid YouTube link';
+      }
+    }
+
+    return null; // Return null if the link is valid or empty
+  }
+
+  String? extractYouTubeVideoId(String? link) {
+    if (link == null || link.isEmpty) {
+      return null;
+    }
+
+    // Regular expression pattern to match YouTube video IDs
+    RegExp regExp = RegExp(
+      r'^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|youtube.com\/v\/)([^#\\?]*).*',
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    Match? match = regExp.firstMatch(link);
+    if (match != null && match.groupCount >= 2) {
+      return match.group(2); // Extract the video ID
+    }
+
+    return null; // Return null if the link is not a valid YouTube link
+  }
+
   static String getInitials(String fullName) => fullName.isNotEmpty
       ? fullName.trim().split(' ').map((l) => l[0]).take(2).join().toUpperCase()
       : '';
