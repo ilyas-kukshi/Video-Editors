@@ -24,35 +24,35 @@ app.post("/signup", (req, res, next) => {
                 return res.status(409).json({
                     message: "Mail exists"
                 });
-            } else {
-                bcrypt.hash(req.body.password, 10, (err, hash) => {
-                    if (err) {
-                        console.log(err);
+            }
+            bcrypt.hash(req.body.password, 10, (err, hash) => {
+                if (err || !result) {
+                    console.log(err);
 
-                        return res.status(500).json({
+                    return res.status(500).json({
+                        error: err
+                    });
+                }
+                const user = new User({
+                    email: req.body.email,
+                    password: hash
+                });
+                user.save()
+                    .then(result => {
+                        console.log(result);
+                        res.status(201).json({
+                            message: "User created"
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
                             error: err
                         });
-                    } else {
-                        const user = new User({
-                            email: req.body.email,
-                            password: hash
-                        });
-                        user.save()
-                            .then(result => {
-                                console.log(result);
-                                res.status(201).json({
-                                    message: "User created"
-                                });
-                            })
-                            .catch(err => {
-                                console.log(err);
-                                res.status(500).json({
-                                    error: err
-                                });
-                            });
-                    }
-                });
-            }
+                    });
+
+            });
+
         });
 });
 
@@ -66,31 +66,43 @@ app.post("/login", (req, res, next) => {
                 });
             }
             bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-                if (err) {
+                if (err || !result) {
                     return res.status(401).json({
                         message: "Auth failed"
                     });
                 }
-                if (result) {
-                    const token = jwt.sign(
-                        {
-                            email: user[0].email,
-                            userId: user[0]._id
-                        },
-                        process.env.JWT_KEY,
-                        {
-                            expiresIn: "1h"
-                        }
-                    );
-                    return res.status(200).json({
-                        userId: user[0]._id,
-                        message: "Auth successful",
-                        token: token
+
+                const token = jwt.sign(
+                    {
+                        email: user[0].email,
+                        userId: user[0]._id
+                    },
+                    process.env.JWT_KEY,
+                    {
+                        expiresIn: "1h"
+                    }
+                );
+
+                Resume.findOne({ userId: user[0]._id })
+                    .exec()
+                    .then(resume => {
+                        const resumeCreated = resume !== null;
+
+                        return res.status(200).json({
+                            userId: user[0]._id,
+                            message: "Auth successful",
+                            token: token,
+                            resumeCreated: resumeCreated
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        return res.status(500).json({
+                            error: err
+                        });
                     });
-                }
-                res.status(401).json({
-                    message: "Auth failed"
-                });
+
+
             });
         })
         .catch(err => {
@@ -105,10 +117,10 @@ const Resume = require('../api/models/resume_model');
 
 // Create a new resume
 app.post('/resumes', (req, res) => {
+    console.log(req.body)
     const { userId, personalInfo, education, skills } = req.body;
-
     const resume = new Resume({
-        userId,
+        userId: new mongoose.Types.ObjectId(userId),
         personalInfo,
         education,
         skills
@@ -120,10 +132,28 @@ app.post('/resumes', (req, res) => {
         })
         .catch(error => {
             console.error('Error saving resume:', error);
-            res.status(500).json({ error: 'Failed to create resume' });
+            res.status(500).json({ error: 'Failed to create resume ' + error });
         });
 });
 
+
+
+app.get('/resumes', (req, res) => {
+    console.log(req.query)
+    const { userId } = req.query;
+
+    Resume.findOne({ userId })
+        .then(resume => {
+            if (!resume) {
+                return res.status(404).json({ error: 'Resume not found' });
+            }
+            res.json(resume);
+        })
+        .catch(error => {
+            console.error('Error retrieving resume:', error);
+            res.status(500).json({ error: 'Failed to retrieve resume' });
+        });
+});
 
 
 
