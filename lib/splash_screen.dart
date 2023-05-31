@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
 
 class SplashScreen extends StatefulWidget {

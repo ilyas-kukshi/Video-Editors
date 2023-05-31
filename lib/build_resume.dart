@@ -8,6 +8,7 @@ import 'package:video_editors/services/resume_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
 import 'package:video_editors/shared/utility.dart';
 
+// ignore: must_be_immutable
 class BuildResume extends StatefulWidget {
   String id;
   BuildResume({super.key, required this.id});
@@ -341,9 +342,7 @@ class _BuildResumeState extends State<BuildResume> {
   Widget skillsCard() {
     // TextEditingController skillController = TextEditingController();
     TextEditingController collegeNameController = TextEditingController();
-    String expertiseLevel = 'Beginner';
-    List<String> skillLevels = ['Beginner', 'Intermediate', 'Expert'];
-
+    
     return Column(
       children: [
         const SizedBox(height: 8),
@@ -401,7 +400,6 @@ class _BuildResumeState extends State<BuildResume> {
             ));
 
             collegeNameController.clear();
-            expertiseLevel = 'Beginner';
 
             setState(() {});
           },

@@ -140,10 +140,6 @@ class _SigninState extends State<Signin> {
     );
   }
 
-  signinService(SigninModel model) {
-    final data = AuthServices().singinService(context, model);
-  }
-
   loginService(SigninModel model) async {
     ResponseModel? responseModel = await AuthServices().loginService(
         context,
@@ -158,6 +154,8 @@ class _SigninState extends State<Signin> {
       Navigator.pop(context);
 
       if (json["resumeCreated"] == true) {
+        Navigator.pushNamed(context, '/dashboardMain',
+            arguments: json['userId']);
       } else {
         Navigator.pushNamed(context, '/buildResume', arguments: json['userId']);
       }

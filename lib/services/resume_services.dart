@@ -39,18 +39,17 @@ class ResumeServices {
     return null;
   }
 
-
-  Future<void> fetchResume(String userId) async {
-    final url = Uri.parse('${Constants.baseUrl}resumes?userId=$userId'); 
+  Future<String?> fetchResume(String userId) async {
+    final url = Uri.parse('${Constants.baseUrl}resumes?userId=$userId');
     try {
-      final response = await http.get(url,
-      
-      
+      final response = await http.get(
+        url,
       );
 
       if (response.statusCode == 200) {
         // Successful response
-        final responseData = jsonDecode(response.body);
+        final responseData = response.body;
+        return responseData;
         // Handle the response data
       } else {
         // Error response
@@ -60,5 +59,6 @@ class ResumeServices {
       // Exception occurred
       print('Exception: $error');
     }
+    return null;
   }
 }
