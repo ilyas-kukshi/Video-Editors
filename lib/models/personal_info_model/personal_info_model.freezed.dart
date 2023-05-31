@@ -24,7 +24,6 @@ mixin _$PersonalInfo {
   String? get city => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,12 +37,7 @@ abstract class $PersonalInfoCopyWith<$Res> {
           PersonalInfo value, $Res Function(PersonalInfo) then) =
       _$PersonalInfoCopyWithImpl<$Res, PersonalInfo>;
   @useResult
-  $Res call(
-      {String? name,
-      String? city,
-      String? phoneNumber,
-      String? email,
-      String? id});
+  $Res call({String? name, String? city, String? phoneNumber, String? email});
 }
 
 /// @nodoc
@@ -63,7 +57,6 @@ class _$PersonalInfoCopyWithImpl<$Res, $Val extends PersonalInfo>
     Object? city = freezed,
     Object? phoneNumber = freezed,
     Object? email = freezed,
-    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -82,10 +75,6 @@ class _$PersonalInfoCopyWithImpl<$Res, $Val extends PersonalInfo>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -98,12 +87,7 @@ abstract class _$$_PersonalInfoCopyWith<$Res>
       __$$_PersonalInfoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? name,
-      String? city,
-      String? phoneNumber,
-      String? email,
-      String? id});
+  $Res call({String? name, String? city, String? phoneNumber, String? email});
 }
 
 /// @nodoc
@@ -121,7 +105,6 @@ class __$$_PersonalInfoCopyWithImpl<$Res>
     Object? city = freezed,
     Object? phoneNumber = freezed,
     Object? email = freezed,
-    Object? id = freezed,
   }) {
     return _then(_$_PersonalInfo(
       name: freezed == name
@@ -140,10 +123,6 @@ class __$$_PersonalInfoCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -151,8 +130,7 @@ class __$$_PersonalInfoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_PersonalInfo implements _PersonalInfo {
-  const _$_PersonalInfo(
-      {this.name, this.city, this.phoneNumber, this.email, this.id});
+  const _$_PersonalInfo({this.name, this.city, this.phoneNumber, this.email});
 
   factory _$_PersonalInfo.fromJson(Map<String, dynamic> json) =>
       _$$_PersonalInfoFromJson(json);
@@ -165,12 +143,10 @@ class _$_PersonalInfo implements _PersonalInfo {
   final String? phoneNumber;
   @override
   final String? email;
-  @override
-  final String? id;
 
   @override
   String toString() {
-    return 'PersonalInfo(name: $name, city: $city, phoneNumber: $phoneNumber, email: $email, id: $id)';
+    return 'PersonalInfo(name: $name, city: $city, phoneNumber: $phoneNumber, email: $email)';
   }
 
   @override
@@ -182,14 +158,12 @@ class _$_PersonalInfo implements _PersonalInfo {
             (identical(other.city, city) || other.city == city) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, city, phoneNumber, email, id);
+  int get hashCode => Object.hash(runtimeType, name, city, phoneNumber, email);
 
   @JsonKey(ignore: true)
   @override
@@ -210,8 +184,7 @@ abstract class _PersonalInfo implements PersonalInfo {
       {final String? name,
       final String? city,
       final String? phoneNumber,
-      final String? email,
-      final String? id}) = _$_PersonalInfo;
+      final String? email}) = _$_PersonalInfo;
 
   factory _PersonalInfo.fromJson(Map<String, dynamic> json) =
       _$_PersonalInfo.fromJson;
@@ -224,8 +197,6 @@ abstract class _PersonalInfo implements PersonalInfo {
   String? get phoneNumber;
   @override
   String? get email;
-  @override
-  String? get id;
   @override
   @JsonKey(ignore: true)
   _$$_PersonalInfoCopyWith<_$_PersonalInfo> get copyWith =>

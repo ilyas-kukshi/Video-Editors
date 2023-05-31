@@ -1,5 +1,3 @@
-
-
 import 'package:video_editors/models/education_model/education_model.dart';
 import 'package:video_editors/models/personal_info_model/personal_info_model.dart';
 import 'package:video_editors/models/skills_model/skills_model.dart';
@@ -19,8 +17,6 @@ class ResumeModel with _$ResumeModel {
     PersonalInfo? personalInfo,
     List<Education>? education,
     List<Skill>? skills,
-    String? id,
-    int? v,
   }) = _ResumeModel;
 
   factory ResumeModel.fromJson(Map<String, dynamic> json) =>

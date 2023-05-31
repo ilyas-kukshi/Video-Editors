@@ -10,10 +10,9 @@ part 'education_model.g.dart';
 class Education with _$Education {
   const factory Education({
     String? collegeName,
-    DateTime? startDate,
-    DateTime? endDate,
+    // DateTime? startDate,
+    // DateTime? endDate,
     String? degree,
-    String? id,
   }) = _Education;
 
   factory Education.fromJson(Map<String, dynamic> json) =>

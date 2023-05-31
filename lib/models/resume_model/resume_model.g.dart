@@ -18,16 +18,12 @@ _$_ResumeModel _$$_ResumeModelFromJson(Map<String, dynamic> json) =>
       skills: (json['skills'] as List<dynamic>?)
           ?.map((e) => Skill.fromJson(e as Map<String, dynamic>))
           .toList(),
-      id: json['id'] as String?,
-      v: json['v'] as int?,
     );
 
 Map<String, dynamic> _$$_ResumeModelToJson(_$_ResumeModel instance) =>
     <String, dynamic>{
-      'userId': instance.userId,
-      'personalInfo': instance.personalInfo,
-      'education': instance.education,
-      'skills': instance.skills,
-      'id': instance.id,
-      'v': instance.v,
+      'userId': instance.userId!,
+      'personalInfo': instance.personalInfo!.toJson(),
+      'education': instance.education!.map((e) => e.toJson()).toList(),
+      'skills': instance.skills!.map((e) => e.toJson()).toList(),
     };

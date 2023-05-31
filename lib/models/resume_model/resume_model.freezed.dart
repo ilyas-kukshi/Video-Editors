@@ -24,8 +24,6 @@ mixin _$ResumeModel {
   PersonalInfo? get personalInfo => throw _privateConstructorUsedError;
   List<Education>? get education => throw _privateConstructorUsedError;
   List<Skill>? get skills => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
-  int? get v => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,9 +41,7 @@ abstract class $ResumeModelCopyWith<$Res> {
       {String? userId,
       PersonalInfo? personalInfo,
       List<Education>? education,
-      List<Skill>? skills,
-      String? id,
-      int? v});
+      List<Skill>? skills});
 
   $PersonalInfoCopyWith<$Res>? get personalInfo;
 }
@@ -67,8 +63,6 @@ class _$ResumeModelCopyWithImpl<$Res, $Val extends ResumeModel>
     Object? personalInfo = freezed,
     Object? education = freezed,
     Object? skills = freezed,
-    Object? id = freezed,
-    Object? v = freezed,
   }) {
     return _then(_value.copyWith(
       userId: freezed == userId
@@ -87,14 +81,6 @@ class _$ResumeModelCopyWithImpl<$Res, $Val extends ResumeModel>
           ? _value.skills
           : skills // ignore: cast_nullable_to_non_nullable
               as List<Skill>?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      v: freezed == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int?,
     ) as $Val);
   }
 
@@ -123,9 +109,7 @@ abstract class _$$_ResumeModelCopyWith<$Res>
       {String? userId,
       PersonalInfo? personalInfo,
       List<Education>? education,
-      List<Skill>? skills,
-      String? id,
-      int? v});
+      List<Skill>? skills});
 
   @override
   $PersonalInfoCopyWith<$Res>? get personalInfo;
@@ -146,8 +130,6 @@ class __$$_ResumeModelCopyWithImpl<$Res>
     Object? personalInfo = freezed,
     Object? education = freezed,
     Object? skills = freezed,
-    Object? id = freezed,
-    Object? v = freezed,
   }) {
     return _then(_$_ResumeModel(
       userId: freezed == userId
@@ -166,14 +148,6 @@ class __$$_ResumeModelCopyWithImpl<$Res>
           ? _value._skills
           : skills // ignore: cast_nullable_to_non_nullable
               as List<Skill>?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      v: freezed == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -185,9 +159,7 @@ class _$_ResumeModel implements _ResumeModel {
       {this.userId,
       this.personalInfo,
       final List<Education>? education,
-      final List<Skill>? skills,
-      this.id,
-      this.v})
+      final List<Skill>? skills})
       : _education = education,
         _skills = skills;
 
@@ -219,13 +191,8 @@ class _$_ResumeModel implements _ResumeModel {
   }
 
   @override
-  final String? id;
-  @override
-  final int? v;
-
-  @override
   String toString() {
-    return 'ResumeModel(userId: $userId, personalInfo: $personalInfo, education: $education, skills: $skills, id: $id, v: $v)';
+    return 'ResumeModel(userId: $userId, personalInfo: $personalInfo, education: $education, skills: $skills)';
   }
 
   @override
@@ -238,9 +205,7 @@ class _$_ResumeModel implements _ResumeModel {
                 other.personalInfo == personalInfo) &&
             const DeepCollectionEquality()
                 .equals(other._education, _education) &&
-            const DeepCollectionEquality().equals(other._skills, _skills) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.v, v) || other.v == v));
+            const DeepCollectionEquality().equals(other._skills, _skills));
   }
 
   @JsonKey(ignore: true)
@@ -250,9 +215,7 @@ class _$_ResumeModel implements _ResumeModel {
       userId,
       personalInfo,
       const DeepCollectionEquality().hash(_education),
-      const DeepCollectionEquality().hash(_skills),
-      id,
-      v);
+      const DeepCollectionEquality().hash(_skills));
 
   @JsonKey(ignore: true)
   @override
@@ -273,9 +236,7 @@ abstract class _ResumeModel implements ResumeModel {
       {final String? userId,
       final PersonalInfo? personalInfo,
       final List<Education>? education,
-      final List<Skill>? skills,
-      final String? id,
-      final int? v}) = _$_ResumeModel;
+      final List<Skill>? skills}) = _$_ResumeModel;
 
   factory _ResumeModel.fromJson(Map<String, dynamic> json) =
       _$_ResumeModel.fromJson;
@@ -288,10 +249,6 @@ abstract class _ResumeModel implements ResumeModel {
   List<Education>? get education;
   @override
   List<Skill>? get skills;
-  @override
-  String? get id;
-  @override
-  int? get v;
   @override
   @JsonKey(ignore: true)
   _$$_ResumeModelCopyWith<_$_ResumeModel> get copyWith =>

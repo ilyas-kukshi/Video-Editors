@@ -21,8 +21,6 @@ Skill _$SkillFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Skill {
   String? get name => throw _privateConstructorUsedError;
-  String? get expertiseLevel => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +32,7 @@ abstract class $SkillCopyWith<$Res> {
   factory $SkillCopyWith(Skill value, $Res Function(Skill) then) =
       _$SkillCopyWithImpl<$Res, Skill>;
   @useResult
-  $Res call({String? name, String? expertiseLevel, String? id});
+  $Res call({String? name});
 }
 
 /// @nodoc
@@ -51,21 +49,11 @@ class _$SkillCopyWithImpl<$Res, $Val extends Skill>
   @override
   $Res call({
     Object? name = freezed,
-    Object? expertiseLevel = freezed,
-    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      expertiseLevel: freezed == expertiseLevel
-          ? _value.expertiseLevel
-          : expertiseLevel // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -77,7 +65,7 @@ abstract class _$$_SkillCopyWith<$Res> implements $SkillCopyWith<$Res> {
       __$$_SkillCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, String? expertiseLevel, String? id});
+  $Res call({String? name});
 }
 
 /// @nodoc
@@ -90,21 +78,11 @@ class __$$_SkillCopyWithImpl<$Res> extends _$SkillCopyWithImpl<$Res, _$_Skill>
   @override
   $Res call({
     Object? name = freezed,
-    Object? expertiseLevel = freezed,
-    Object? id = freezed,
   }) {
     return _then(_$_Skill(
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      expertiseLevel: freezed == expertiseLevel
-          ? _value.expertiseLevel
-          : expertiseLevel // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -113,21 +91,17 @@ class __$$_SkillCopyWithImpl<$Res> extends _$SkillCopyWithImpl<$Res, _$_Skill>
 /// @nodoc
 @JsonSerializable()
 class _$_Skill implements _Skill {
-  const _$_Skill({this.name, this.expertiseLevel, this.id});
+  const _$_Skill({this.name});
 
   factory _$_Skill.fromJson(Map<String, dynamic> json) =>
       _$$_SkillFromJson(json);
 
   @override
   final String? name;
-  @override
-  final String? expertiseLevel;
-  @override
-  final String? id;
 
   @override
   String toString() {
-    return 'Skill(name: $name, expertiseLevel: $expertiseLevel, id: $id)';
+    return 'Skill(name: $name)';
   }
 
   @override
@@ -135,15 +109,12 @@ class _$_Skill implements _Skill {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Skill &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.expertiseLevel, expertiseLevel) ||
-                other.expertiseLevel == expertiseLevel) &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, expertiseLevel, id);
+  int get hashCode => Object.hash(runtimeType, name);
 
   @JsonKey(ignore: true)
   @override
@@ -160,19 +131,12 @@ class _$_Skill implements _Skill {
 }
 
 abstract class _Skill implements Skill {
-  const factory _Skill(
-      {final String? name,
-      final String? expertiseLevel,
-      final String? id}) = _$_Skill;
+  const factory _Skill({final String? name}) = _$_Skill;
 
   factory _Skill.fromJson(Map<String, dynamic> json) = _$_Skill.fromJson;
 
   @override
   String? get name;
-  @override
-  String? get expertiseLevel;
-  @override
-  String? get id;
   @override
   @JsonKey(ignore: true)
   _$$_SkillCopyWith<_$_Skill> get copyWith =>

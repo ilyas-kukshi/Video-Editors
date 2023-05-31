@@ -11,7 +11,6 @@ class PersonalInfo with _$PersonalInfo {
     String? city,
     String? phoneNumber,
     String? email,
-    String? id,
   }) = _PersonalInfo;
 
   factory PersonalInfo.fromJson(Map<String, dynamic> json) =>

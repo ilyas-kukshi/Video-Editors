@@ -12,7 +12,6 @@ _$_PersonalInfo _$$_PersonalInfoFromJson(Map<String, dynamic> json) =>
       city: json['city'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
       email: json['email'] as String?,
-      id: json['id'] as String?,
     );
 
 Map<String, dynamic> _$$_PersonalInfoToJson(_$_PersonalInfo instance) =>
@@ -21,5 +20,4 @@ Map<String, dynamic> _$$_PersonalInfoToJson(_$_PersonalInfo instance) =>
       'city': instance.city,
       'phoneNumber': instance.phoneNumber,
       'email': instance.email,
-      'id': instance.id,
     };
