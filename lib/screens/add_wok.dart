@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:video_editors/models/work_model/work_model.dart';
+import 'package:video_editors/services/portfolio_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
 import 'package:video_editors/shared/utility.dart';
 
@@ -37,6 +39,41 @@ class _AddWorkState extends State<AddWork> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 1.5),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: Colors.white,
+                                size: 25,
+                              ),
+                              Text(
+                                "Go back",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 20),
                 const Text(
                   "Add Your Work",
@@ -141,6 +178,9 @@ class _AddWorkState extends State<AddWork> {
                   buttonText: "Save Work",
                   onTap: () {
                     final valid = _formKey.currentState!.validate();
+                    if (valid) {
+                      addWorkService();
+                    }
                   },
                 )
               ],
@@ -149,6 +189,17 @@ class _AddWorkState extends State<AddWork> {
         ),
       ),
     );
+  }
+
+  addWorkService() async {
+    final repoonse = await PortfolioServices().createWork(WorkModel(
+      userId: widget.id,
+      title: projectNameController.text,
+      description: descriptionController.text,
+      clientName: clientNameController.text,
+      videoLink: linkController.text,
+      category: category,
+    ));
   }
 
   String? extractYouTubeVideoId(String? value) {
