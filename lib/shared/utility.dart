@@ -109,6 +109,8 @@ class Utility {
       if (!isValidLink) {
         return 'Invalid YouTube link';
       }
+    } else {
+      return "Enter youtube link";
     }
 
     return null; // Return null if the link is valid or empty
