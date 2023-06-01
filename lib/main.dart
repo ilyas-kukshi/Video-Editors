@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:video_editors/auth/create_account.dart';
 import 'package:video_editors/auth/signin.dart';
 import 'package:video_editors/screens/add_wok.dart';
 import 'package:video_editors/screens/build_resume.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
       case '/signin':
         return PageTransition(
             child: const Signin(), type: PageTransitionType.leftToRight);
+      case '/createAccount':
+        return PageTransition(
+            child: const CreateAccount(), type: PageTransitionType.leftToRight);
       case '/buildResume':
         return PageTransition(
             child: BuildResume(

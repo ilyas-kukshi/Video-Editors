@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_editors/models/education_model/education_model.dart';
 import 'package:video_editors/models/personal_info_model/personal_info_model.dart';
+import 'package:video_editors/models/reponse_model.dart';
 import 'package:video_editors/models/resume_model/resume_model.dart';
 import 'package:video_editors/models/skills_model/skills_model.dart';
 import 'package:video_editors/services/resume_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
+import 'package:video_editors/shared/dialogs.dart';
 import 'package:video_editors/shared/utility.dart';
 
 // ignore: must_be_immutable
@@ -89,6 +91,7 @@ class _BuildResumeState extends State<BuildResume> {
                           hintText: 'Phone Number',
                           controller: phnNoController,
                           validator: Utility.phoneNumberValidator,
+                          keyboardType: TextInputType.phone,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(10)
                           ],
@@ -102,11 +105,13 @@ class _BuildResumeState extends State<BuildResume> {
                         ),
                         const SizedBox(height: 8),
                         AppThemeShared.textFormField(
-                            context: context,
-                            hintText: 'Email',
-                            textInputAction: TextInputAction.done,
-                            controller: emailController,
-                            validator: Utility.emailValidator)
+                          context: context,
+                          hintText: 'Email',
+                          textInputAction: TextInputAction.done,
+                          controller: emailController,
+                          validator: Utility.emailValidator,
+                          keyboardType: TextInputType.emailAddress,
+                        )
                       ],
                     ),
                   ),
@@ -271,15 +276,8 @@ class _BuildResumeState extends State<BuildResume> {
                   if (valid &&
                       educationList.isNotEmpty &&
                       skillList.isNotEmpty) {
-                    ResumeServices().createResume(ResumeModel(
-                        userId: widget.id,
-                        education: educationList,
-                        skills: skillList,
-                        personalInfo: PersonalInfo(
-                            name: nameController.text,
-                            email: emailController.text,
-                            phoneNumber: phnNoController.text,
-                            city: cityController.text)));
+                    DialogShared.loadingDialog(context, "Saving Profile");
+                    addResume();
                   }
                 },
               ),
@@ -289,6 +287,25 @@ class _BuildResumeState extends State<BuildResume> {
         ),
       ),
     );
+  }
+
+  void addResume() async {
+    ResponseModel? responseModel = await ResumeServices().createResume(
+        ResumeModel(
+            userId: widget.id,
+            education: educationList,
+            skills: skillList,
+            personalInfo: PersonalInfo(
+                name: nameController.text,
+                email: emailController.text,
+                phoneNumber: phnNoController.text,
+                city: cityController.text)));
+
+    if (responseModel != null) {
+      Navigator.pushNamed(context, '/dashboardMain', arguments: widget.id);
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   Widget educationCard() {
@@ -342,7 +359,7 @@ class _BuildResumeState extends State<BuildResume> {
   Widget skillsCard() {
     // TextEditingController skillController = TextEditingController();
     TextEditingController collegeNameController = TextEditingController();
-    
+
     return Column(
       children: [
         const SizedBox(height: 8),

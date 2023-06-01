@@ -21,6 +21,7 @@ class Utility {
     }
     return null;
   }
+  
 
   static String? productPriceValidator(String? name) {
     if (name!.isEmpty) {
@@ -28,6 +29,9 @@ class Utility {
     }
     return null;
   }
+ 
+  
+
 
   static String? phoneNumberValidator(String? phoneNumber) {
     if (phoneNumber?.length != 10 ||
@@ -47,7 +51,7 @@ class Utility {
   static String? passwordSameValidator(
       String? setPassword, String? confirmPassword) {
     if (confirmPassword!.length < 6) {
-      return 'Pleas enter a valid phone number';
+      return 'Both passwords should be same';
     } else if (setPassword != confirmPassword) {
       return 'Both passwords should be same';
     }

@@ -19,7 +19,7 @@ class AuthServices {
         body: model.toJson(),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return ResponseModel(response.statusCode, response.body);
 
         // responseData = response.body;

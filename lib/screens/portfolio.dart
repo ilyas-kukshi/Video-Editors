@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:video_editors/models/work_model/work_model.dart';
+import 'package:video_editors/screens/go_back_widget.dart';
 import 'package:video_editors/screens/video_player.dart';
 import 'package:video_editors/services/portfolio_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
@@ -46,36 +47,7 @@ class _PortfolioState extends State<Portfolio> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white, width: 1.5),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
-                          size: 25,
-                        ),
-                        Text(
-                          "Go back",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            goBack(context),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),

@@ -26,7 +26,7 @@ app.post("/signup", (req, res, next) => {
                 });
             }
             bcrypt.hash(req.body.password, 10, (err, hash) => {
-                if (err || !result) {
+                if (err) {
                     console.log(err);
 
                     return res.status(500).json({
@@ -41,7 +41,7 @@ app.post("/signup", (req, res, next) => {
                     .then(result => {
                         console.log(result);
                         res.status(201).json({
-                            message: "User created"
+                            "userId" : result._id
                         });
                     })
                     .catch(err => {
