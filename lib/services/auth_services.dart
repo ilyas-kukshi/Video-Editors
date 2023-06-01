@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +13,7 @@ class AuthServices {
   Future<ResponseModel?> singinService(
       BuildContext context, SigninModel model) async {
     String finalUrl = "${url}signup";
-    print(finalUrl);
+
     try {
       final response = await http.post(
         Uri.parse(finalUrl),
@@ -26,8 +28,8 @@ class AuthServices {
       } else {
         // Handle error response
         Fluttertoast.showToast(msg: response.body);
-        print('POST request failed with status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        // print('POST request failed with status: ${response.statusCode}');
+        // print('Response body: ${response.body}');
       }
     } catch (e) {
       // Handle any exceptions that occur during the request
@@ -52,14 +54,15 @@ class AuthServices {
         // responseData = response.body;
       } else {
         // Handle error response
-        print('POST request failed with status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        // print('POST request failed with status: ${response.statusCode}');
+        // print('Response body: ${response.body}');
         Fluttertoast.showToast(msg: response.body.toString());
         Navigator.pop(context);
       }
     } catch (e) {
       // Handle any exceptions that occur during the request
-      print('Error occurred during POST request: $e');
+      // print('Error occurred during POST request: $e');
+      Fluttertoast.showToast(msg: e.toString());
     }
     return null;
   }

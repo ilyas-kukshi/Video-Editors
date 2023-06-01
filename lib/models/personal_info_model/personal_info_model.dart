@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'personal_info_model.freezed.dart';
 part 'personal_info_model.g.dart';

@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_editors/models/resume_model/resume_model.dart';
 import 'package:video_editors/models/skills_model/skills_model.dart';
 import 'package:video_editors/services/resume_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
+import 'package:video_editors/shared/dialogs.dart';
 import 'package:video_editors/shared/slide_in_widget.dart';
 
+// ignore: must_be_immutable
 class DashboardMain extends StatefulWidget {
   String id;
   DashboardMain({super.key, required this.id});
@@ -19,7 +22,6 @@ class _DashboardMainState extends State<DashboardMain> {
   ResumeModel? resumeModel;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     // fetchResume(widget.id);
@@ -27,72 +29,83 @@ class _DashboardMainState extends State<DashboardMain> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppThemeShared.primaryColor,
-      body: FutureBuilder<ResumeModel?>(
-          future: fetchResume(widget.id),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (!snapshot.hasError) {
-                if (snapshot.hasData) {
-                  return SafeArea(
-                      child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 30),
-                        Center(
-                          child: SlideInWidget(
-                              direction: SlideDirection.top,
-                              duration: const Duration(milliseconds: 1200),
-                              child: personalnfoCard(context)),
-                        ),
-                        const SizedBox(height: 20),
-                        SlideInWidget(
-                            direction: SlideDirection.left,
-                            duration: const Duration(milliseconds: 1500),
-                            child: educationContainer(context)),
-                        const SizedBox(height: 20),
-                        SlideInWidget(
-                            direction: SlideDirection.left,
-                            duration: const Duration(milliseconds: 1800),
-                            child: skillContainer(context)),
-                        const SizedBox(height: 20),
-                        SlideInWidget(
-                          direction: SlideDirection.left,
-                          duration: const Duration(milliseconds: 2000),
-                          child: AppThemeShared.sharedButton(
-                            context: context,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            borderRadius: 12,
-                            buttonText:
-                                "Take a look at my Portfolio by clicking here",
-                            textColor: AppThemeShared.primaryColor,
-                            color: Colors.white,
-                            onTap: () {
-                              Navigator.pushNamed(context, '/portfolio',
-                                  arguments: widget.id);
-                            },
+    return WillPopScope(
+      onWillPop: () {
+        DialogShared.doubleButtonDialog(
+            context, "Are you sure you want to exit.", () {
+          SystemNavigator.pop();
+        }, () {
+          Navigator.pop(context);
+        });
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: AppThemeShared.primaryColor,
+        body: FutureBuilder<ResumeModel?>(
+            future: fetchResume(widget.id),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (!snapshot.hasError) {
+                  if (snapshot.hasData) {
+                    return SafeArea(
+                        child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 30),
+                          Center(
+                            child: SlideInWidget(
+                                direction: SlideDirection.top,
+                                duration: const Duration(milliseconds: 1200),
+                                child: personalnfoCard(context)),
                           ),
-                        ),
-                      ],
-                    ),
-                  ));
+                          const SizedBox(height: 20),
+                          SlideInWidget(
+                              direction: SlideDirection.left,
+                              duration: const Duration(milliseconds: 1500),
+                              child: educationContainer(context)),
+                          const SizedBox(height: 20),
+                          SlideInWidget(
+                              direction: SlideDirection.left,
+                              duration: const Duration(milliseconds: 1800),
+                              child: skillContainer(context)),
+                          const SizedBox(height: 20),
+                          SlideInWidget(
+                            direction: SlideDirection.left,
+                            duration: const Duration(milliseconds: 2000),
+                            child: AppThemeShared.sharedButton(
+                              context: context,
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              borderRadius: 12,
+                              buttonText:
+                                  "Take a look at my Portfolio by clicking here",
+                              textColor: AppThemeShared.primaryColor,
+                              color: Colors.white,
+                              onTap: () {
+                                Navigator.pushNamed(context, '/portfolio',
+                                    arguments: widget.id);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ));
+                  } else {
+                    return const Text(
+                      "No Data",
+                      style: TextStyle(color: Colors.white),
+                    );
+                  }
                 } else {
-                  return const Text(
-                    "No Data",
-                    style: TextStyle(color: Colors.white),
+                  return Text(
+                    snapshot.error.toString(),
+                    style: const TextStyle(color: Colors.white),
                   );
                 }
               } else {
-                return Text(
-                  snapshot.error.toString(),
-                  style: const TextStyle(color: Colors.white),
-                );
+                return const CircularProgressIndicator();
               }
-            } else {
-              return const CircularProgressIndicator();
-            }
-          }),
+            }),
+      ),
     );
   }
 
@@ -128,19 +141,22 @@ class _DashboardMainState extends State<DashboardMain> {
         ));
   }
 
-  Container skillCard(Skill skill) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppThemeShared.primaryColor),
-      ),
-      child: Text(
-        skill.name!,
-        style: TextStyle(
-          color: AppThemeShared.primaryColor,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+  Widget skillCard(Skill skill) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: AppThemeShared.primaryColor),
+        ),
+        child: Text(
+          skill.name!,
+          style: TextStyle(
+            color: AppThemeShared.primaryColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

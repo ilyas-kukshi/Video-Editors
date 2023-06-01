@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 enum SlideDirection { top, bottom, left, right }
@@ -5,11 +7,13 @@ enum SlideDirection { top, bottom, left, right }
 class SlideInWidget extends StatefulWidget {
   final SlideDirection direction;
   final Duration duration;
-
   final Widget child;
 
-  SlideInWidget(
-      {required this.direction, required this.duration, required this.child});
+  const SlideInWidget(
+      {super.key,
+      required this.direction,
+      required this.duration,
+      required this.child});
 
   @override
   _SlideInWidgetState createState() => _SlideInWidgetState();

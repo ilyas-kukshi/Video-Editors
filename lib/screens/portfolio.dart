@@ -6,6 +6,7 @@ import 'package:video_editors/screens/video_player.dart';
 import 'package:video_editors/services/portfolio_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
 
+// ignore: must_be_immutable
 class Portfolio extends StatefulWidget {
   String id;
   Portfolio({super.key, required this.id});
@@ -32,138 +33,142 @@ class _PortfolioState extends State<Portfolio> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initialWorkData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppThemeShared.primaryColor,
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 15),
-            goBack(context),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Flexible(
-                      flex: 2,
-                      child: AppThemeShared.sharedDropDown(
-                        borderColor: Colors.white,
-                        enabledBorderColor: Colors.white,
-                        focusedBorderColor: Colors.white,
-                        hintColor: Colors.white,
-                        context: context,
-                        labelText: 'Select Category',
-                        value: category,
-                        items: categoryList,
-                        onChanged: (value) {
-                          setState(() {
-                            category = value!;
-                            getWorkByCategory(category);
-                          });
-                        },
-                      )),
-                  Flexible(
-                      flex: 1,
-                      child: AppThemeShared.sharedButton(
-                        context: context,
-                        width: 150,
-                        color: Colors.white,
-                        buttonText: "Add Work",
-                        textColor: AppThemeShared.primaryColor,
-                        onTap: () {
-                          Navigator.pushNamed(context, '/addWork',
-                              arguments: widget.id);
-                        },
-                      ))
-                ],
+    return RefreshIndicator(
+      onRefresh: () {
+        return initialWorkData();
+      },
+      child: Scaffold(
+        backgroundColor: AppThemeShared.primaryColor,
+        body: SafeArea(
+            child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 15),
+              goBack(context),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Flexible(
+                        flex: 2,
+                        child: AppThemeShared.sharedDropDown(
+                          borderColor: Colors.white,
+                          enabledBorderColor: Colors.white,
+                          focusedBorderColor: Colors.white,
+                          hintColor: Colors.white,
+                          context: context,
+                          labelText: 'Select Category',
+                          value: category,
+                          items: categoryList,
+                          onChanged: (value) {
+                            setState(() {
+                              category = value!;
+                              getWorkByCategory(category);
+                            });
+                          },
+                        )),
+                    Flexible(
+                        flex: 1,
+                        child: AppThemeShared.sharedButton(
+                          context: context,
+                          width: 150,
+                          color: Colors.white,
+                          buttonText: "Add Work",
+                          textColor: AppThemeShared.primaryColor,
+                          onTap: () async {
+                            Navigator.pushNamed(context, '/addWork',
+                                arguments: widget.id);
+                          },
+                        ))
+                  ],
+                ),
               ),
-            ),
-            workList.isEmpty
-                ? const Center(
-                    child: Text(
-                      "No work in this category",
-                      style: TextStyle(color: Colors.white, fontSize: 28),
-                    ),
-                  )
-                : ListView.builder(
-                    itemCount: workList.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: "You touched me");
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                VideoPlayer(
-                                  videoId: extractYouTubeVideoId(
-                                      workList[index].videoLink!)!,
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  "Project: ${workList[index].title!}",
-                                  style: TextStyle(
-                                    color: AppThemeShared.primaryColor,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+              workList.isEmpty
+                  ? const Center(
+                      child: Text(
+                        "No work in this category",
+                        style: TextStyle(color: Colors.white, fontSize: 28),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: workList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Fluttertoast.showToast(msg: "You touched me");
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  VideoPlayer(
+                                    videoId: extractYouTubeVideoId(
+                                        workList[index].videoLink!)!,
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  "Description: ${workList[index].description!}",
-                                  style: TextStyle(
-                                    color: AppThemeShared.primaryColor,
-                                    fontSize: 18,
-                                    // fontWeight: FontWeight.bold,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "Project: ${workList[index].title!}",
+                                    style: TextStyle(
+                                      color: AppThemeShared.primaryColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  "Category: ${workList[index].category!}",
-                                  style: TextStyle(
-                                    color: AppThemeShared.primaryColor,
-                                    fontSize: 18,
-                                    // fontWeight: FontWeight.bold,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "Description: ${workList[index].description!}",
+                                    style: TextStyle(
+                                      color: AppThemeShared.primaryColor,
+                                      fontSize: 18,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  "Client: ${workList[index].clientName!}",
-                                  style: TextStyle(
-                                    color: AppThemeShared.primaryColor,
-                                    fontSize: 18,
-                                    // fontWeight: FontWeight.bold,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "Category: ${workList[index].category!}",
+                                    style: TextStyle(
+                                      color: AppThemeShared.primaryColor,
+                                      fontSize: 18,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "Client: ${workList[index].clientName!}",
+                                    style: TextStyle(
+                                      color: AppThemeShared.primaryColor,
+                                      fontSize: 18,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  )
-          ],
-        ),
-      )),
+                        );
+                      },
+                    )
+            ],
+          ),
+        )),
+      ),
     );
   }
 

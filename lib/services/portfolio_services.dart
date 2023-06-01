@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:video_editors/models/reponse_model.dart';
 import 'package:video_editors/models/work_model/work_model.dart';
 import 'package:video_editors/shared/constants.dart';
 
 class PortfolioServices {
-  Future<void> createWork(WorkModel model) async {
+  Future<ResponseModel?> createWork(WorkModel model) async {
     final url = Uri.parse('${Constants.baseUrl}addwork');
 
     // Create a JSON payload
@@ -20,14 +22,17 @@ class PortfolioServices {
       );
 
       if (response.statusCode == 201) {
-        print('Work created successfully');
-        print(response.body);
+        // print('Work created successfully');
+        // print(response.body);
+        return ResponseModel(response.statusCode, response.body);
       } else {
-        print('Failed to create work. Status code: ${response.statusCode}');
+        // print('Failed to create work. Status code: ${response.statusCode}');
+        Fluttertoast.showToast(msg: jsonDecode(response.body));
       }
     } catch (error) {
-      print('Exception occurred: $error');
+      Fluttertoast.showToast(msg: error.toString());
     }
+    return null;
   }
 
   Future<List<WorkModel>> getWorkByCategory(String id, String category) async {
@@ -40,8 +45,7 @@ class PortfolioServices {
       if (response.statusCode == 200) {
         // Parse the JSON response
         final List<dynamic> jsonData = jsonDecode(response.body);
-        print(jsonData);
-        // Convert JSON data to WorkModel objects
+        // print(jsonData);
         final List<WorkModel> works = jsonData.map((data) {
           return WorkModel.fromJson(data);
         }).toList();
@@ -49,12 +53,12 @@ class PortfolioServices {
         return works;
       } else {
         // Handle error response
-        print('Error: ${response.statusCode}');
+        // print('Error: ${response.statusCode}');
         return [];
       }
     } catch (error) {
       // Handle request error
-      print('Exception occurred: $error');
+      // print('Exception occurred: $error');
       return [];
     }
   }
@@ -68,7 +72,7 @@ class PortfolioServices {
       if (response.statusCode == 200) {
         // Parse the JSON response
         final List<dynamic> jsonData = jsonDecode(response.body);
-        print(jsonData);
+        // print(jsonData);
         // Convert JSON data to WorkModel objects
         final List<WorkModel> works = jsonData.map((data) {
           return WorkModel.fromJson(data);
@@ -77,12 +81,15 @@ class PortfolioServices {
         return works;
       } else {
         // Handle error response
-        print('Error: ${response.statusCode}');
+        // print('Error: ${response.statusCode}');
+        Fluttertoast.showToast(
+            msg: "${response.statusCode}: ${jsonDecode(response.body)}");
         return [];
       }
     } catch (error) {
       // Handle request error
-      print('Exception occurred: $error');
+      // print('Exception occurred: $error');
+      Fluttertoast.showToast(msg: error.toString());
       return [];
     }
   }

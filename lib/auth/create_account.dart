@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:video_editors/models/reponse_model.dart';
 import 'package:video_editors/models/signin/signin_model.dart';
-import 'package:video_editors/screens/go_back_widget.dart';
 import 'package:video_editors/services/auth_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
 import 'package:video_editors/shared/dialogs.dart';
@@ -235,12 +234,19 @@ class _CreateAccountState extends State<CreateAccount> {
 
     if (responseModel != null) {
       final json = jsonDecode(responseModel.data);
-      print(json);
-      Navigator.pop(context);
-
-      Navigator.pushNamed(context, '/buildResume', arguments: json["userId"]);
+      // print(json);
+      navigateToBuildResume(json);
     } else {
-      Navigator.pop(context);
+      pop();
     }
+  }
+
+  void pop() {
+    Navigator.pop(context);
+  }
+
+  void navigateToBuildResume(json) {
+    Navigator.pop(context);
+    Navigator.pushNamed(context, '/buildResume', arguments: json["userId"]);
   }
 }

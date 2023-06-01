@@ -1,8 +1,11 @@
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:video_editors/models/work_model/work_model.dart';
 import 'package:video_editors/screens/go_back_widget.dart';
 import 'package:video_editors/services/portfolio_services.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
+import 'package:video_editors/shared/dialogs.dart';
 import 'package:video_editors/shared/utility.dart';
 
 class AddWork extends StatefulWidget {
@@ -41,10 +44,7 @@ class _AddWorkState extends State<AddWork> {
             child: Column(
               children: [
                 const SizedBox(height: 15),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: goBack(context) 
-                ),
+                Align(alignment: Alignment.centerLeft, child: goBack(context)),
                 const SizedBox(height: 20),
                 const Text(
                   "Add Your Work",
@@ -150,6 +150,7 @@ class _AddWorkState extends State<AddWork> {
                   onTap: () {
                     final valid = _formKey.currentState!.validate();
                     if (valid) {
+                      DialogShared.loadingDialog(context, "Saving Work");
                       addWorkService();
                     }
                   },
@@ -163,7 +164,7 @@ class _AddWorkState extends State<AddWork> {
   }
 
   addWorkService() async {
-    final repoonse = await PortfolioServices().createWork(WorkModel(
+    final response = await PortfolioServices().createWork(WorkModel(
       userId: widget.id,
       title: projectNameController.text,
       description: descriptionController.text,
@@ -171,6 +172,10 @@ class _AddWorkState extends State<AddWork> {
       videoLink: linkController.text,
       category: category,
     ));
+    if (response != null) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
   }
 
   String? extractYouTubeVideoId(String? value) {

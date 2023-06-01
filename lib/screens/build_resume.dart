@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:video_editors/models/education_model/education_model.dart';
 import 'package:video_editors/models/personal_info_model/personal_info_model.dart';
 import 'package:video_editors/models/reponse_model.dart';
@@ -278,6 +279,8 @@ class _BuildResumeState extends State<BuildResume> {
                       skillList.isNotEmpty) {
                     DialogShared.loadingDialog(context, "Saving Profile");
                     addResume();
+                  } else {
+                    Fluttertoast.showToast(msg: "Fill in all the details");
                   }
                 },
               ),
@@ -302,57 +305,69 @@ class _BuildResumeState extends State<BuildResume> {
                 city: cityController.text)));
 
     if (responseModel != null) {
-      Navigator.pushNamed(context, '/dashboardMain', arguments: widget.id);
+      navigateToDashboard();
     } else {
-      Navigator.pop(context);
+      pop();
     }
+  }
+
+  void pop() {
+    Navigator.pop(context);
+  }
+
+  void navigateToDashboard() {
+    Navigator.pushNamed(context, '/dashboardMain', arguments: widget.id);
   }
 
   Widget educationCard() {
     TextEditingController collegeNameController = TextEditingController();
     TextEditingController degreeController = TextEditingController();
+    FocusNode focusNode = FocusNode();
 
-    return Column(
-      children: [
-        AppThemeShared.textFormField(
-          context: context,
-          hintText: 'College Name',
-          textInputAction: TextInputAction.next,
-          controller: collegeNameController,
-          hintStyle: Theme.of(context)
-              .textTheme
-              .titleSmall!
-              .copyWith(color: AppThemeShared.primaryColor.withOpacity(0.7)),
-        ),
-        const SizedBox(height: 8),
-        AppThemeShared.textFormField(
-          context: context,
-          hintText: 'Degree',
-          textInputAction: TextInputAction.done,
-          controller: degreeController,
-          hintStyle: Theme.of(context)
-              .textTheme
-              .titleSmall!
-              .copyWith(color: AppThemeShared.primaryColor.withOpacity(0.7)),
-        ),
-        const SizedBox(height: 8),
-        AppThemeShared.sharedButton(
-          context: context,
-          width: MediaQuery.of(context).size.width * 0.85,
-          height: 50,
-          buttonText: "Save",
-          onTap: () {
-            educationList.add(Education(
-                collegeName: collegeNameController.text,
-                degree: degreeController.text));
+    return FocusScope(
+      child: Column(
+        children: [
+          AppThemeShared.textFormField(
+            context: context,
+            hintText: 'College Name',
+            focusNode: focusNode,
+            textInputAction: TextInputAction.next,
+            controller: collegeNameController,
+            hintStyle: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .copyWith(color: AppThemeShared.primaryColor.withOpacity(0.7)),
+          ),
+          const SizedBox(height: 8),
+          AppThemeShared.textFormField(
+            context: context,
+            hintText: 'Degree',
+            textInputAction: TextInputAction.done,
+            controller: degreeController,
+            hintStyle: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .copyWith(color: AppThemeShared.primaryColor.withOpacity(0.7)),
+          ),
+          const SizedBox(height: 8),
+          AppThemeShared.sharedButton(
+            context: context,
+            width: MediaQuery.of(context).size.width * 0.85,
+            height: 50,
+            buttonText: "Save",
+            onTap: () {
+              educationList.add(Education(
+                  collegeName: collegeNameController.text,
+                  degree: degreeController.text));
 
-            collegeNameController.clear();
-            degreeController.clear();
+              collegeNameController.clear();
+              degreeController.clear();
 
-            setState(() {});
-          },
-        ),
-      ],
+              setState(() {});
+            },
+          ),
+        ],
+      ),
     );
   }
 

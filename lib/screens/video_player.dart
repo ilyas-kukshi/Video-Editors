@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+// ignore: must_be_immutable
 class VideoPlayer extends StatefulWidget {
   String videoId;
   VideoPlayer({super.key, required this.videoId});
@@ -19,7 +20,6 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,

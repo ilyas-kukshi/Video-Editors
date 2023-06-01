@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_editors/shared/app_theme_shared.dart';
 
-
 class DialogShared {
   static loadingDialog(BuildContext context, String text) {
     showDialog(
@@ -26,7 +25,8 @@ class DialogShared {
                 const SizedBox(height: 30),
                 Text(
                   text,
-                  style: const TextStyle(fontSize: 18),
+                  style: TextStyle(
+                      fontSize: 18, color: AppThemeShared.primaryColor),
                 )
               ],
             ),
@@ -50,7 +50,8 @@ class DialogShared {
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
+                style:
+                    TextStyle(fontSize: 18, color: AppThemeShared.primaryColor),
               ),
               const SizedBox(height: 30),
               Row(

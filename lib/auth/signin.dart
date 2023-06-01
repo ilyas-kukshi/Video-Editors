@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -197,7 +199,7 @@ class _SigninState extends State<Signin> {
 
     if (responseModel != null) {
       final json = jsonDecode(responseModel.data);
-      print(json);
+      // print(json);
       Navigator.pop(context);
 
       if (json["resumeCreated"] == true) {

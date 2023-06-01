@@ -70,6 +70,7 @@ class AppThemeShared {
       TextInputAction? textInputAction,
       TextInputType? keyboardType,
       AutovalidateMode? autovalidateMode,
+      FocusNode? focusNode,
 
       //
       TextStyle style = const TextStyle(fontSize: 18, color: Color(0xff20A090)),
@@ -126,6 +127,7 @@ class AppThemeShared {
         maxLines: maxLines,
         minLines: minLines,
         autovalidateMode: autovalidateMode,
+        focusNode: focusNode,
         onChanged: onChanged,
         onSaved: onSaved,
         onEditingComplete: onEditingComplete,

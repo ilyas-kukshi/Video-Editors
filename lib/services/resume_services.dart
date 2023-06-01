@@ -18,21 +18,21 @@ class ResumeServices {
         'education': resume.education?.map((e) => e.toJson()).toList(),
         'skills': resume.skills?.map((s) => s.toJson()).toList(),
       };
-      print(jsonEncode(requestBody));
+      // print(jsonEncode(requestBody));
       final response = await http.post(url,
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(requestBody));
 
       if (response.statusCode == 201) {
-        print(response.body);
+        // print(response.body);
         return ResponseModel(response.statusCode, response.body);
       } else {
-        print(jsonDecode(response.body));
+        // print(jsonDecode(response.body));
         Fluttertoast.showToast(
             msg: 'Error creating resume: ${response.statusCode}');
       }
     } catch (error) {
-      print(error);
+      // print(error);
       Fluttertoast.showToast(
           msg: 'Exception occurred while creating resume: $error');
     }
@@ -53,11 +53,13 @@ class ResumeServices {
         // Handle the response data
       } else {
         // Error response
-        print('Error: ${response.statusCode}');
+        // print('Error: ${response.statusCode}');
+        Fluttertoast.showToast(msg: jsonDecode(response.body));
       }
     } catch (error) {
       // Exception occurred
-      print('Exception: $error');
+      // print('Exception: $error');
+      Fluttertoast.showToast(msg: error.toString());
     }
     return null;
   }
