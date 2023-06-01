@@ -173,51 +173,6 @@ class _CreateAccountState extends State<CreateAccount> {
                     },
                   ),
                 ),
-                const SizedBox(height: 25),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: const Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          'OR',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 25),
-                SlideInWidget(
-                  direction: SlideDirection.bottom,
-                  duration: const Duration(milliseconds: 1600),
-                  child: AppThemeShared.sharedButton(
-                    context: context,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    buttonText: "Create Account",
-                    color: Colors.white,
-                    textColor: Colors.black,
-                    onTap: () {
-                      Navigator.pushNamed(context, '/createAccount');
-                    },
-                  ),
-                ),
               ],
             ),
           ),
