@@ -155,7 +155,65 @@ app.get('/resumes', (req, res) => {
         });
 });
 
+const Work = require('./models/work_model');
 
+app.post('/addwork', (req, res) => {
+    const { userId, videoLink, title, description, clientName, category } = req.body;
+
+    const work = new Work({
+        userId,
+        videoLink,
+        title,
+        description,
+        clientName,
+        category,
+    });
+
+    work.save()
+        .then(savedWork => {
+            res.status(201).json(savedWork);
+        })
+        .catch(error => {
+            console.error('Error saving work:', error);
+            res.status(500).json({ error: 'Failed to create work' });
+        });
+});
+
+app.get('/getworks', (req, res) => {
+    const { userId } = req.query;
+
+    Work.find({ userId: userId })
+        .then(works => {
+            console.log(works)
+            if (works.length === 0) {
+                return res.status(404).json({ message: 'No works found' });
+            }
+
+            res.status(200).json(works);
+        })
+        .catch(error => {
+            console.error('Error fetching works:', error);
+            res.status(500).json({ error: 'Failed to fetch works' });
+        });
+});
+
+app.get('/getworks/category', (req, res) => {
+    const { userId, category } = req.query;
+
+    Work.find({ userId: userId, category })
+        .then(works => {
+            console.log(works)
+            if (works.length === 0) {
+                return res.status(404).json({ message: 'No works found' });
+            }
+
+            res.status(200).json(works);
+        })
+        .catch(error => {
+            console.error('Error fetching works:', error);
+            res.status(500).json({ error: 'Failed to fetch works' });
+        });
+});
 
 mongoose.connect("mongodb+srv://ilyaskukshi:ilyaskukshi@cluster0.bn4aw.mongodb.net/Video-Editors?retryWrites=true&w=majority")
     .then(() => {
