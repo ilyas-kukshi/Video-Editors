@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 })
 
 const bcrypt = require("bcrypt");
-const User = require('../api/models/user_signin')
+const User = require('./models/user_signin')
 app.post("/signup", (req, res, next) => {
     User.find({ email: req.body.email })
         .exec()
@@ -41,7 +41,7 @@ app.post("/signup", (req, res, next) => {
                     .then(result => {
                         console.log(result);
                         res.status(201).json({
-                            "userId" : result._id
+                            "userId": result._id
                         });
                     })
                     .catch(err => {
@@ -62,7 +62,7 @@ app.post("/login", (req, res, next) => {
         .then(user => {
             if (user.length < 1) {
                 return res.status(401).json({
-                    message: "Auth failed"
+                    message: "No user with this credentials"
                 });
             }
             bcrypt.compare(req.body.password, user[0].password, (err, result) => {

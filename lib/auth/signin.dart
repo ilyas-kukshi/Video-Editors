@@ -169,7 +169,7 @@ class _SigninState extends State<Signin> {
                 const SizedBox(height: 25),
                 SlideInWidget(
                   direction: SlideDirection.bottom,
-                  duration: const Duration(milliseconds: 1600),
+                  duration: const Duration(milliseconds: 1800),
                   child: AppThemeShared.sharedButton(
                     context: context,
                     width: MediaQuery.of(context).size.width * 0.85,
